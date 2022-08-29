@@ -13,6 +13,10 @@ type TechnologyCardProps = {
 const Home: NextPage = () => {
 	const { data: session } = useSession();
 
+	const user = session?.user?.email;
+
+	const { data: hello } = trpc.useQuery(["example.hello", { text: user }]);
+
 	return (
 		<>
 			<main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
@@ -27,6 +31,7 @@ const Home: NextPage = () => {
 						<Link href="/api/auth/signout">
 							<a className="text-blue-400">Sign Out</a>
 						</Link>
+						<h1>{hello?.greeting}</h1>
 					</>
 				)}
 			</main>
