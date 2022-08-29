@@ -1,5 +1,7 @@
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
+import Link from "next/link";
 import { trpc } from "../utils/trpc";
 
 type TechnologyCardProps = {
@@ -9,38 +11,26 @@ type TechnologyCardProps = {
 };
 
 const Home: NextPage = () => {
-	const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
+	const { data: session } = useSession();
 
 	return (
 		<>
 			<main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-				hello
-				{/* <div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full">
-          {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading..</p>}
-        </div> */}
+				{!session && (
+					<Link href="/api/auth/signin">
+						<a className="text-blue-400">Sign In</a>
+					</Link>
+				)}
+				{session && (
+					<>
+						<div>Welcome</div>
+						<Link href="/api/auth/signout">
+							<a className="text-blue-400">Sign Out</a>
+						</Link>
+					</>
+				)}
 			</main>
 		</>
-	);
-};
-
-const TechnologyCard = ({
-	name,
-	description,
-	documentation,
-}: TechnologyCardProps) => {
-	return (
-		<section className="flex flex-col justify-center p-6 duration-500 border-2 border-gray-500 rounded shadow-xl motion-safe:hover:scale-105">
-			<h2 className="text-lg text-gray-700">{name}</h2>
-			<p className="text-sm text-gray-600">{description}</p>
-			<a
-				className="mt-3 text-sm underline text-violet-500 decoration-dotted underline-offset-2"
-				href={documentation}
-				target="_blank"
-				rel="noreferrer"
-			>
-				Documentation
-			</a>
-		</section>
 	);
 };
 
