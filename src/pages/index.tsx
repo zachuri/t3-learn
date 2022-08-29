@@ -4,12 +4,6 @@ import Head from "next/head";
 import Link from "next/link";
 import { trpc } from "../utils/trpc";
 
-type TechnologyCardProps = {
-	name: string;
-	description: string;
-	documentation: string;
-};
-
 const Home: NextPage = () => {
 	const { data: session } = useSession();
 
@@ -27,7 +21,7 @@ const Home: NextPage = () => {
 				)}
 				{session && (
 					<>
-						<div>Welcome</div>
+						<div>Welcome to the HOME PAGE</div>
 						<Link href="/api/auth/signout">
 							<a className="text-blue-400">Sign Out</a>
 						</Link>
