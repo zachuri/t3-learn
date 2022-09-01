@@ -110,24 +110,6 @@ const Navbar = () => {
 				</div>
 			</div>
 
-			{/* Middle */}
-			{/* Note: at mobile length hide search */}
-			<div className="hidden md:flex grow-[2] items-center justify-center">
-				{/* Justify the search bar to fit max width */}
-				<div className="bg-gray-900 text-white flex justify-between items-center max-w-[400] w-full m-auto p-2 rounded-2xl">
-					<div>
-						<input
-							type="text"
-							className="bg-transparent border-none text-white focus:outline-none"
-							placeholder="Search"
-						/>
-					</div>
-					<div>
-						<BsSearch />
-					</div>
-				</div>
-			</div>
-
 			{/* Right Side */}
 			<div className="hidden md:flex grow items-center justify-end">
 				{session ? (
