@@ -186,7 +186,7 @@ const Navbar = () => {
 					<div className="flex items-center">
 						<Link href="/account">
 							<button className="px-4 py-[6px] rounded-lg font-bold bg-[#9147ff]">
-								Account
+								Sign In
 							</button>
 						</Link>
 						<BsPerson size={30} />
