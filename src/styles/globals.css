@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 html {
-	@apply bg-white text-white scroll-smooth;
+	@apply bg-white text-black scroll-smooth;
 }
