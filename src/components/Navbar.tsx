@@ -25,7 +25,7 @@ const Navbar = () => {
 	// console.log(session);
 
 	return (
-		<div className="fixed h-14 w-full flex flex-nowrap items-center p-4 bg-[#0e0e10] mb-[2px] z-10">
+		<div className="border-b-4 border-black-500 fixed h-14 w-full flex flex-nowrap items-center p-4 bg-white mb-[2px] z-10">
 			{/* Left Side */}
 			<div className="flex grow items-center justify-start">
 				<Link href="/">
@@ -39,8 +39,8 @@ const Navbar = () => {
 						/>
 					</a>
 				</Link>
-				<p className="text-white p-4">Tracker</p>
-				<div className="p-4">
+				<p className="p-4">Tracker</p>
+				<div>
 					{/* Headless UI */}
 					<Menu as="div" className="relative text-left">
 						<div className="flex">
@@ -58,7 +58,7 @@ const Navbar = () => {
 							leaveFrom="transform opacity-100 scale-100"
 							leaveTo="transform opacity-0 scale-95"
 						>
-							<Menu.Items className="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-[#0e0e10] ring-1 ring-white ring-opacity-5 focus:outline-none">
+							<Menu.Items className="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
 								<div className="py-1">
 									<Menu.Item>
 										{({ active }) => (
@@ -66,8 +66,8 @@ const Navbar = () => {
 												href="#"
 												className={classNames(
 													active
-														? "bg-gray-500 text-gray-100"
-														: "text-gray-200",
+														? "bg-gray-500 text-black"
+														: "text-black",
 													"block px-4 py-2 text-sm"
 												)}
 											>
@@ -81,8 +81,8 @@ const Navbar = () => {
 												href="#"
 												className={classNames(
 													active
-														? "bg-gray-500 text-gray-100"
-														: "text-gray-200",
+														? "bg-gray-500 text-black"
+														: "text-black",
 													"block px-4 py-2 text-sm"
 												)}
 											>
@@ -96,8 +96,8 @@ const Navbar = () => {
 												href="#"
 												className={classNames(
 													active
-														? "bg-gray-500 text-gray-100"
-														: "text-gray-200",
+														? "bg-gray-500 text-black"
+														: "text-black",
 													"block px-4 py-2 text-sm"
 												)}
 											>
@@ -114,13 +114,11 @@ const Navbar = () => {
 
 			{/* Right Side */}
 			<div className="hidden md:flex grow items-center justify-end">
-      
-
 				{session ? (
 					<div className="flex items-center">
 						<Link href="/account">
 							<div>
-								<p className="text-white pr-4 cursor-pointer">
+								<p className="pr-4 cursor-pointer">
 									Welcome, {session?.user?.name}
 								</p>
 							</div>
