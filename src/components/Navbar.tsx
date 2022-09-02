@@ -43,7 +43,7 @@ const Navbar = () => {
 					<Menu as="div" className="relative text-left">
 						<div className="flex">
 							<Menu.Button>
-								<BsThreeDotsVertical className="fill-white" size={20} />
+								<BsThreeDotsVertical size={20} />
 							</Menu.Button>
 						</div>
 
@@ -189,7 +189,7 @@ const Navbar = () => {
 								Sign In
 							</button>
 						</Link>
-						<BsPerson className="fill-white ml-2" size={30} />
+						<BsPerson size={30} />
 					</div>
 				)}
 			</div>
