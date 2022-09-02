@@ -184,7 +184,7 @@ const Navbar = () => {
 					</div>
 				) : (
 					<div className="flex items-center">
-						<Link href="/account">
+						<Link href="/api/auth/signin">
 							<button className="px-4 py-[6px] rounded-lg font-bold bg-[#9147ff]">
 								Sign In
 							</button>
