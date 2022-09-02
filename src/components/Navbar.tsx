@@ -209,8 +209,8 @@ const Navbar = () => {
 				// md:hidden -> anything above medium make hidden
 				className={
 					nav
-						? "md:hidden fixed top-0 left-0 w-full h-screen bg-[#0e0e10] flex justify-center items-center ease-in duration-300"
-						: "md:hidden fixed top-[-100%] left-0 w-full h-screen bg-[#0e0e10] flex justify-center items-center ease-in duration-300"
+						? "md:hidden fixed top-0 left-0 w-full h-screen bg-white flex justify-center items-center ease-in duration-300"
+						: "md:hidden fixed top-[-100%] left-0 w-full h-screen bg-white justify-center items-center ease-in duration-300"
 				}
 			>
 				<ul className="text-center">
@@ -218,25 +218,25 @@ const Navbar = () => {
 						onClick={() => setNav(false)}
 						className="p-4 text-3xl font-bold"
 					>
-						<Link href="/">Progress</Link>
+						<Link href="/progress">Progress</Link>
 					</li>
 					<li
 						onClick={() => setNav(false)}
 						className="p-4 text-3xl font-bold"
 					>
-						<Link href="#/live">Exercise Tracker</Link>
+						<Link href="/exercise">Exercise</Link>
 					</li>
 					<li
 						onClick={() => setNav(false)}
 						className="p-4 text-3xl font-bold"
 					>
-						<Link href="/#categories">Weight Tracker</Link>
+						<Link href="/weight">Weight</Link>
 					</li>
 					<li
 						onClick={() => setNav(false)}
 						className="p-4 text-3xl font-bold"
 					>
-						<Link href="/account">Diet Tracker</Link>
+						<Link href="/diet">Diet</Link>
 					</li>
 				</ul>
 			</div>
