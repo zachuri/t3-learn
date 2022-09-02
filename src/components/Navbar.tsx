@@ -3,7 +3,9 @@ import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import Logo from "../../public/favicon.ico";
 import Image from "next/image";
-import { BsThreeDotsVertical, BsSearch, BsPerson } from "react-icons/bs";
+import { BsThreeDotsVertical, BsPerson } from "react-icons/bs";
+import { BiDumbbell } from "react-icons/bi";
+import { TbScaleOutline } from "react-icons/tb";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useSession, signIn, signOut } from "next-auth/react";
 
@@ -37,7 +39,7 @@ const Navbar = () => {
 						/>
 					</a>
 				</Link>
-				<p className="text-white p-4">Browse</p>
+				<p className="text-white p-4">Tracker</p>
 				<div className="p-4">
 					{/* Headless UI */}
 					<Menu as="div" className="relative text-left">
@@ -112,6 +114,8 @@ const Navbar = () => {
 
 			{/* Right Side */}
 			<div className="hidden md:flex grow items-center justify-end">
+      
+
 				{session ? (
 					<div className="flex items-center">
 						<Link href="/account">
@@ -216,25 +220,25 @@ const Navbar = () => {
 						onClick={() => setNav(false)}
 						className="p-4 text-3xl font-bold"
 					>
-						<Link href="/">Home</Link>
+						<Link href="/">Progress</Link>
 					</li>
 					<li
 						onClick={() => setNav(false)}
 						className="p-4 text-3xl font-bold"
 					>
-						<Link href="#/live">Live Channels</Link>
+						<Link href="#/live">Exercise Tracker</Link>
 					</li>
 					<li
 						onClick={() => setNav(false)}
 						className="p-4 text-3xl font-bold"
 					>
-						<Link href="/#categories">Top Categories</Link>
+						<Link href="/#categories">Weight Tracker</Link>
 					</li>
 					<li
 						onClick={() => setNav(false)}
 						className="p-4 text-3xl font-bold"
 					>
-						<Link href="/account">Account</Link>
+						<Link href="/account">Diet Tracker</Link>
 					</li>
 				</ul>
 			</div>
