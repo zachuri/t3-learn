@@ -238,6 +238,12 @@ const Navbar = () => {
 					>
 						<Link href="/diet">Diet</Link>
 					</li>
+					<li
+						onClick={() => setNav(false)}
+						className="p-4 text-3xl font-bold"
+					>
+						<Link href="/account">Account</Link>
+					</li>
 				</ul>
 			</div>
 		</div>
