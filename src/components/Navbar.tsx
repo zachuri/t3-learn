@@ -189,7 +189,7 @@ const Navbar = () => {
 								Sign In
 							</button>
 						</Link>
-						<BsPerson size={30} />
+						<BsPerson className="fill-white ml-2" size={30} />
 					</div>
 				)}
 			</div>
