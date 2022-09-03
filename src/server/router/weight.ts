@@ -7,7 +7,7 @@ export const weightRouter = createRouter()
 	.mutation("create-weight", {
 		input: createWeightSchema,
 		async resolve({ ctx, input }) {
-			if (!ctx.session) {
+			if (!ctx.session.user) {
 				new trpc.TRPCError({
 					code: "FORBIDDEN",
 					message: "Cannot create a post while logged out",
@@ -29,8 +29,19 @@ export const weightRouter = createRouter()
 			return weight;
 		},
 	})
-	.query("getAll", {
-		async resolve({ ctx }) {
-			return await ctx.prisma.example.findMany();
+	.query("getAllWeights", {
+		resolve({ ctx }) {
+			if (!ctx.session.user) {
+				new trpc.TRPCError({
+					code: "FORBIDDEN",
+					message: "Please Sign In: can't get any post",
+				});
+			}
+
+			return ctx.prisma.weight.findMany({
+				where: {
+					userId: ctx.session?.user?.id,
+				},
+			});
 		},
 	});
