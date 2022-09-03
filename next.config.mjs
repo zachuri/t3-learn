@@ -21,6 +21,7 @@ export default defineNextConfig({
 			"lh3.googleusercontent.com",
 			"robohash.org",
 			"static-cdn.jtvnw.net",
+			"cdn.discordapp.com",
 		],
 	},
 });
