@@ -3,10 +3,17 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { trpc } from "../utils/trpc";
 import { CreateWeightInput } from "../schema/weight.schema";
+import { useEffect, useState } from "react";
+import { useSetState } from "@mantine/hooks";
+import { Weight } from "@prisma/client";
+import { useQueryClient } from "react-query";
 
+const Weight = () => {
+	const queryClient = useQueryClient();
 
-const Progress = () => {
 	const { handleSubmit, register, reset } = useForm<CreateWeightInput>();
+
+	const [weights, setWeights] = useState<Weight[]>();
 
 	const { data, isLoading } = trpc.useQuery(["weights.getAllWeights"]);
 
@@ -17,12 +24,15 @@ const Progress = () => {
 			// router.push(`/weight/${id}`);
 			router.push(`/weight`);
 			reset();
+
+			// able to refetch query
+			queryClient.refetchQueries("weights.getAllWeights");
 		},
 	});
 
 	function onSubmit(values: CreateWeightInput) {
 		mutate(values);
-  }
+	}
 
 	return (
 		<>
@@ -95,4 +105,4 @@ const Progress = () => {
 	);
 };
 
-export default Progress;
+export default Weight;

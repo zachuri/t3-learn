@@ -30,7 +30,7 @@ export const weightRouter = createRouter()
 		},
 	})
 	.query("getAllWeights", {
-		resolve({ ctx }) {
+		async resolve({ ctx }) {
 			if (!ctx.session.user) {
 				new trpc.TRPCError({
 					code: "FORBIDDEN",
