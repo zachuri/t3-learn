@@ -115,7 +115,7 @@ const Weight = () => {
                 })}
               </tbody>
             </table> */}
-            <div className="grid grid-cols md:grid-cols-2 gap-3">
+            <div className="grid grid-cols text-xs md:text-base md:grid-cols-2 gap-3 mt-2">
               {data?.map((weight) => {
                 return (
                   <div key={weight.id} >
