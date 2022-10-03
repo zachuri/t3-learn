@@ -8,21 +8,29 @@ import { BiDumbbell } from "react-icons/bi";
 import { TbScaleOutline } from "react-icons/tb";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useSession, signIn, signOut } from "next-auth/react";
+import router from "next/router";
+
+const accounts = [
+  { id: 1, name: 'Account', href: '/account' },
+  { id: 2, name: 'SignIn', href: '' },
+  { id: 3, name: 'SignOut', href: '' },
+]
+
+const links = [
+  { href: '/progress', name: 'Progress' },
+  { href: '/exercise', name: 'Exercise' },
+  { href: '/weight', name: 'Weight' },
+  { href: '/diet', name: 'Diet' },
+  { href: 'https://github.com/zachuri/t3-learn', name: 'Source' },
+]
+
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Navbar = () => {
-  const [nav, setNav] = useState(false);
-
-  const handleNav = () => {
-    setNav(!nav);
-  };
-
   const { data: session } = useSession();
-
-  // console.log(session);
 
   return (
     <div className="border-b-4 border-black-500 fixed h-14 w-full flex flex-nowrap items-center p-4 bg-white mb-[2px] z-10">
@@ -40,82 +48,83 @@ const Navbar = () => {
           </a>
         </Link>
         <p className="p-4">Tracker</p>
-        <div>
-          {/* Headless UI */}
-          <Menu as="div" className="relative text-left">
-            <div className="flex">
-              <Menu.Button>
-                <BsThreeDotsVertical size={20} />
-              </Menu.Button>
-            </div>
-
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items className="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="py-1">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active
-                            ? "bg-gray-500 text-black"
-                            : "text-black",
-                          "block px-4 py-2 text-sm"
-                        )}
-                      >
-                        Settings
-                      </a>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active
-                            ? "bg-gray-500 text-black"
-                            : "text-black",
-                          "block px-4 py-2 text-sm"
-                        )}
-                      >
-                        Support
-                      </a>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active
-                            ? "bg-gray-500 text-black"
-                            : "text-black",
-                          "block px-4 py-2 text-sm"
-                        )}
-                      >
-                        License
-                      </a>
-                    )}
-                  </Menu.Item>
-                </div>
-              </Menu.Items>
-            </Transition>
-          </Menu>
-        </div>
       </div>
 
       {/* Right Side */}
       <div className="hidden md:flex grow items-center justify-end">
         {session ? (
           <div className="flex items-center">
+
+            {/* Menu for Pages */}
+            <Menu as="div" className="relative inline-block text-left mt-1">
+              <>
+                <Menu.Button role="navigation" aria-label="hamburger menu to navigate to pages">
+                  <BsThreeDotsVertical />
+                </Menu.Button>
+
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-[#0e0e10] ring-1 ring-white ring-opacity-5 focus:outline-none">
+                    {/* <Menu.Items> */}
+                    {links.map((link) => (
+                      /* Use the `active` state to conditionally style the active item. */
+                      <Menu.Item key={link.href} as={Fragment}>
+                        {({ active }) => (
+                          // Headless UI needs to use a tag
+                          //  mylink component helps to make it work
+
+                          // <MyLink href={`${link.href}`} active={active} onClick={() => {
+                          //   setTimeout(() => {
+                          //     ref.current?.click();
+                          //   }, 0);
+                          // }}>
+                          //   {link.name}
+                          // </MyLink>
+
+                          // <Link href={link.href}>{link.name}</Link>
+
+                          // <a href={link.href}
+                          //   className={classNames(
+                          //     active
+                          //       ? "bg-gray-500 text-gray-100"
+                          //       : "text-gray-200",
+                          //     "block px-4 py-2 text-sm"
+                          //   )}
+                          // >
+                          //   {link.name}
+                          // </a>
+
+                          // Work around for menu to close
+                          <button
+                            name={link.name}
+
+                            className={classNames(
+                              active
+                                ? "bg-gray-500 text-gray-100"
+                                : "text-gray-200",
+                              "text-left w-full block px-4 py-2 text-sm"
+                            )}
+
+                            onClick={() => {
+                              router.push(`${link.href}`)
+                            }}>
+                            {link.name}
+                          </button>
+                        )}
+                      </Menu.Item>
+                    ))}
+                  </Menu.Items>
+                </Transition>
+              </>
+            </Menu>
+
             <Link href="/account">
               <div>
                 <p className="pr-4 cursor-pointer">
@@ -123,10 +132,11 @@ const Navbar = () => {
                 </p>
               </div>
             </Link>
-            {/* Headless UI */}
-            <Menu as="div" className="relative text-left">
-              <div className="flex">
-                <Menu.Button>
+
+            {/* Menu for Account*/}
+            <Menu as="div" className="relative inline-block text-left mt-1">
+              <>
+                <Menu.Button role="navigation" aria-label="hamburger menu to navigate to pages">
                   <Image
                     className="rounded-full"
                     // Just casted as string because next see's string | undefined -> can't be undefined
@@ -136,54 +146,61 @@ const Navbar = () => {
                     height="40"
                   />
                 </Menu.Button>
-              </div>
 
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
-                {/* change direction to show on the left (right-0) */}
-                <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-[#0e0e10] ring-1 ring-white ring-opacity-5 focus:outline-none">
-                  <div className="py-1">
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-[#0e0e10] ring-1 ring-white ring-opacity-5 focus:outline-none">
+                    {/* <Menu.Items> */}
                     <Menu.Item>
                       {({ active }) => (
-                        // eslint-disable-next-line @next/next/no-html-link-for-pages
-                        <a
-                          href="/account"
+                        <button
+                          name={"account"}
+
                           className={classNames(
                             active
                               ? "bg-gray-500 text-gray-100"
                               : "text-gray-200",
-                            "block px-4 py-2 text-sm"
+                            "text-left w-full block px-4 py-2 text-sm"
                           )}
-                        >
+
+                          onClick={() => {
+                            router.push("/account")
+                          }}>
                           Account
-                        </a>
+                        </button>
                       )}
                     </Menu.Item>
+
                     <Menu.Item>
                       {({ active }) => (
-                        <p
-                          onClick={() => signOut()}
+                        <button
+                          name={!session.user ? "Login" : "Logout"}
+
                           className={classNames(
                             active
                               ? "bg-gray-500 text-gray-100"
                               : "text-gray-200",
-                            "block px-4 py-2 text-sm"
+                            "text-left w-full block px-4 py-2 text-sm"
                           )}
-                        >
-                          Logout
-                        </p>
+
+                          onClick={() => {
+                            { !session.user ? signIn() : signOut() }
+                          }}>
+
+                          {!session.user ? "Login" : "Logout"}
+                        </button>
                       )}
                     </Menu.Item>
-                  </div>
-                </Menu.Items>
-              </Transition>
+                  </Menu.Items>
+                </Transition>
+              </>
             </Menu>
           </div>
         ) : (
@@ -198,56 +215,89 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Hamburger Menu */}
-      <div
-        onClick={handleNav}
-        className="block md:hidden z-10 cursor-pointer"
-      >
-        {nav ? <AiOutlineClose size={25} /> : <AiOutlineMenu size={25} />}
+      {/* Right (Hamburger Menu)*/}
+      <div className='flex justify-between items-center md:hidden'>
+        {/* <button
+            onClick={handleTheme}
+            className="flex justify-between items-center mr-2"
+            role="hamgurger menu" aria-label="view the links to all the other pages"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+            </svg>
+          </button> */}
+        <Menu as="div" className="relative inline-block text-left mt-1">
+          <>
+            <Menu.Button role="navigation" aria-label="hamburger menu to navigate to pages">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            </Menu.Button>
+
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-[#0e0e10] ring-1 ring-white ring-opacity-5 focus:outline-none">
+                {/* <Menu.Items> */}
+                {links.map((link) => (
+                  /* Use the `active` state to conditionally style the active item. */
+                  <Menu.Item key={link.href} as={Fragment}>
+                    {({ active }) => (
+                      // Headless UI needs to use a tag
+                      //  mylink component helps to make it work
+
+                      // <MyLink href={`${link.href}`} active={active} onClick={() => {
+                      //   setTimeout(() => {
+                      //     ref.current?.click();
+                      //   }, 0);
+                      // }}>
+                      //   {link.name}
+                      // </MyLink>
+
+                      // <Link href={link.href}>{link.name}</Link>
+
+                      // <a href={link.href}
+                      //   className={classNames(
+                      //     active
+                      //       ? "bg-gray-500 text-gray-100"
+                      //       : "text-gray-200",
+                      //     "block px-4 py-2 text-sm"
+                      //   )}
+                      // >
+                      //   {link.name}
+                      // </a>
+
+                      // Work around for menu to close
+                      <button
+                        name={link.name}
+
+                        className={classNames(
+                          active
+                            ? "bg-gray-500 text-gray-100"
+                            : "text-gray-200",
+                          "text-left w-full block px-4 py-2 text-sm"
+                        )}
+
+                        onClick={() => {
+                          router.push(`${link.href}`)
+                        }}>
+                        {link.name}
+                      </button>
+                    )}
+                  </Menu.Item>
+                ))}
+              </Menu.Items>
+            </Transition>
+          </>
+        </Menu>
       </div>
 
-      {/* Mobile Menu */}
-      <div
-        // md:hidden -> anything above medium make hidden
-        className={
-          nav
-            ? "md:hidden fixed top-0 left-0 w-full h-screen bg-white flex justify-center items-center ease-in duration-300"
-            : "md:hidden fixed top-[-100%] left-0 w-full h-screen bg-white justify-center items-center ease-in duration-300"
-        }
-      >
-        <ul className="text-center">
-          <li
-            onClick={() => setNav(false)}
-            className="p-4 text-3xl font-bold"
-          >
-            <Link href="/progress">Progress</Link>
-          </li>
-          <li
-            onClick={() => setNav(false)}
-            className="p-4 text-3xl font-bold"
-          >
-            <Link href="/exercise">Exercise</Link>
-          </li>
-          <li
-            onClick={() => setNav(false)}
-            className="p-4 text-3xl font-bold"
-          >
-            <Link href="/weight">Weight</Link>
-          </li>
-          <li
-            onClick={() => setNav(false)}
-            className="p-4 text-3xl font-bold"
-          >
-            <Link href="/diet">Diet</Link>
-          </li>
-          <li
-            onClick={() => setNav(false)}
-            className="p-4 text-3xl font-bold"
-          >
-            <Link href="/account">Account</Link>
-          </li>
-        </ul>
-      </div>
     </div>
   );
 };
