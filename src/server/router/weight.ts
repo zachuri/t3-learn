@@ -7,7 +7,8 @@ export const weightRouter = createRouter()
 	.mutation("create-weight", {
 		input: createWeightSchema,
 		async resolve({ ctx, input }) {
-			if (!ctx.session.user) {
+			// !ctx.session.user -> no need for user
+			if (!ctx.session) {
 				new trpc.TRPCError({
 					code: "FORBIDDEN",
 					message: "Cannot create a post while logged out",
@@ -31,7 +32,7 @@ export const weightRouter = createRouter()
 	})
 	.query("getAllWeights", {
 		async resolve({ ctx }) {
-			if (!ctx.session.user) {
+			if (!ctx.session) {
 				new trpc.TRPCError({
 					code: "FORBIDDEN",
 					message: "Please Sign In: can't get any post",
