@@ -1,11 +1,11 @@
-import Head from "next/head";
+// import Head from "next/head";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { trpc } from "../utils/trpc";
 import { CreateWeightInput } from "../schema/weight.schema";
-import { useEffect, useState } from "react";
-import { useSetState } from "@mantine/hooks";
-import { Weight } from "@prisma/client";
+// import { useEffect, useState } from "react";
+// import { useSetState } from "@mantine/hooks";
+// import { Weight } from "@prisma/client";
 import { useQueryClient } from "react-query";
 import { useSession } from "next-auth/react";
 import Item from "../components/Item";
@@ -17,7 +17,7 @@ const Weight = () => {
 
   const { handleSubmit, register, reset } = useForm<CreateWeightInput>();
 
-  const [weights, setWeights] = useState<Weight[]>();
+  // const [weights, setWeights] = useState<Weight[]>();
 
   const { data, isLoading } = trpc.useQuery(["weights.getAllWeights"]);
 
