@@ -14,20 +14,95 @@ const accounts = [
   { id: 1, name: 'Account', href: '/account' },
   { id: 2, name: 'SignIn', href: '' },
   { id: 3, name: 'SignOut', href: '' },
+  { href: 'https://github.com/zachuri/t3-learn', name: 'Source' },
 ]
 
 const links = [
+  { href: '/', name: 'Home' },
   { href: '/progress', name: 'Progress' },
   { href: '/exercise', name: 'Exercise' },
   { href: '/weight', name: 'Weight' },
   { href: '/diet', name: 'Diet' },
-  { href: 'https://github.com/zachuri/t3-learn', name: 'Source' },
 ]
 
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
+
+const PagesMenu: React.FC = () => {
+  return (
+    <Menu as="div" className="relative inline-block text-left mt-1">
+      <>
+        <Menu.Button role="navigation" aria-label="hamburger menu to navigate to pages">
+          <BsThreeDotsVertical />
+        </Menu.Button>
+
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-[#0e0e10] ring-1 ring-white ring-opacity-5 focus:outline-none">
+            {/* <Menu.Items> */}
+            {links.map((link) => (
+              /* Use the `active` state to conditionally style the active item. */
+              <Menu.Item key={link.href} as={Fragment}>
+                {({ active }) => (
+                  // Headless UI needs to use a tag
+                  //  mylink component helps to make it work
+
+                  // <MyLink href={`${link.href}`} active={active} onClick={() => {
+                  //   setTimeout(() => {
+                  //     ref.current?.click();
+                  //   }, 0);
+                  // }}>
+                  //   {link.name}
+                  // </MyLink>
+
+                  // <Link href={link.href}>{link.name}</Link>
+
+                  // <a href={link.href}
+                  //   className={classNames(
+                  //     active
+                  //       ? "bg-gray-500 text-gray-100"
+                  //       : "text-gray-200",
+                  //     "block px-4 py-2 text-sm"
+                  //   )}
+                  // >
+                  //   {link.name}
+                  // </a>
+
+                  // Work around for menu to close
+                  <button
+                    name={link.name}
+
+                    className={classNames(
+                      active
+                        ? "bg-gray-500 text-gray-100"
+                        : "text-gray-200",
+                      "text-left w-full block px-4 py-2 text-sm"
+                    )}
+
+                    onClick={() => {
+                      router.push(`${link.href}`)
+                    }}>
+                    {link.name}
+                  </button>
+                )}
+              </Menu.Item>
+            ))}
+          </Menu.Items>
+        </Transition>
+      </>
+    </Menu>
+  )
+}
+
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -56,74 +131,7 @@ const Navbar = () => {
           <div className="flex items-center">
 
             {/* Menu for Pages */}
-            <Menu as="div" className="relative inline-block text-left mt-1">
-              <>
-                <Menu.Button role="navigation" aria-label="hamburger menu to navigate to pages">
-                  <BsThreeDotsVertical />
-                </Menu.Button>
-
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-[#0e0e10] ring-1 ring-white ring-opacity-5 focus:outline-none">
-                    {/* <Menu.Items> */}
-                    {links.map((link) => (
-                      /* Use the `active` state to conditionally style the active item. */
-                      <Menu.Item key={link.href} as={Fragment}>
-                        {({ active }) => (
-                          // Headless UI needs to use a tag
-                          //  mylink component helps to make it work
-
-                          // <MyLink href={`${link.href}`} active={active} onClick={() => {
-                          //   setTimeout(() => {
-                          //     ref.current?.click();
-                          //   }, 0);
-                          // }}>
-                          //   {link.name}
-                          // </MyLink>
-
-                          // <Link href={link.href}>{link.name}</Link>
-
-                          // <a href={link.href}
-                          //   className={classNames(
-                          //     active
-                          //       ? "bg-gray-500 text-gray-100"
-                          //       : "text-gray-200",
-                          //     "block px-4 py-2 text-sm"
-                          //   )}
-                          // >
-                          //   {link.name}
-                          // </a>
-
-                          // Work around for menu to close
-                          <button
-                            name={link.name}
-
-                            className={classNames(
-                              active
-                                ? "bg-gray-500 text-gray-100"
-                                : "text-gray-200",
-                              "text-left w-full block px-4 py-2 text-sm"
-                            )}
-
-                            onClick={() => {
-                              router.push(`${link.href}`)
-                            }}>
-                            {link.name}
-                          </button>
-                        )}
-                      </Menu.Item>
-                    ))}
-                  </Menu.Items>
-                </Transition>
-              </>
-            </Menu>
+            <PagesMenu />
 
             <Link href="/account">
               <div>
@@ -198,6 +206,26 @@ const Navbar = () => {
                         </button>
                       )}
                     </Menu.Item>
+
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          name={"account"}
+
+                          className={classNames(
+                            active
+                              ? "bg-gray-500 text-gray-100"
+                              : "text-gray-200",
+                            "text-left w-full block px-4 py-2 text-sm"
+                          )}
+
+                          onClick={() => {
+                            router.push('https://github.com/zachuri/t3-learn')
+                          }}>
+                          Source
+                        </button>
+                      )}
+                    </Menu.Item>
                   </Menu.Items>
                 </Transition>
               </>
@@ -205,6 +233,7 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="flex items-center">
+            <PagesMenu />
             <Link href="/api/auth/signin">
               <button className="px-4 py-[6px] rounded-lg font-bold bg-[#9147ff]">
                 Sign In
