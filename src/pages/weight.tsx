@@ -118,7 +118,7 @@ const Weight = () => {
             {data?.map((weight) => {
               return (
                 <div key={weight.id}>
-                  <Item weight={weight.weightTotal} date={weight.createdAt.toUTCString()} />
+                  <Item weight={weight.weightTotal} date={weight.createdAt.toUTCString()} description={weight.body} />
                 </div>
               )
             })}
